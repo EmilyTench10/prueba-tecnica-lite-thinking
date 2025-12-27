@@ -1,0 +1,32 @@
+# Django Core
+Django>=5.0
+djangorestframework>=3.14
+djangorestframework-simplejwt>=5.3
+
+# Database
+psycopg2-binary>=2.9
+
+# CORS
+django-cors-headers>=4.3
+
+# Documentation
+drf-yasg>=1.21
+
+# PDF Generation
+reportlab>=4.0
+xhtml2pdf>=0.2
+
+# Email
+django-environ>=0.11
+
+# Blockchain (Web3)
+web3>=6.0
+eth-account>=0.10
+
+# AI/ML
+openai>=1.0
+requests>=2.31
+
+# Utils
+Pillow>=10.0
+python-dotenv>=1.0
