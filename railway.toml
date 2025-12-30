@@ -11,8 +11,8 @@ dockerfilePath = "backend/Dockerfile"
 # Puerto de la aplicación
 port = 8000
 
-# Comando de inicio - con logs detallados
-startCommand = "python manage.py collectstatic --noinput && python manage.py migrate --verbosity 2 && python manage.py runserver 0.0.0.0:$PORT"
+# Comando de inicio - con debug completo
+startCommand = "echo 'PORT=' $PORT && echo 'DB_HOST=' $DB_HOST && python manage.py collectstatic --noinput && python manage.py migrate --verbosity 2 2>&1 && echo 'Starting server on port' $PORT && python manage.py runserver 0.0.0.0:$PORT"
 
 # Deshabilitado temporalmente para debug
 # healthcheckPath = "/swagger/"
