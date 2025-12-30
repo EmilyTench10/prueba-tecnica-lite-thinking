@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "lite-thinking-backend"
+version = "1.0.0"
+description = "Backend del sistema Lite Thinking - API REST con Django"
+authors = ["Emily <emilyunicor123@gmail.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+# Paquete de dominio - Capa independiente con modelos Django
+# Instalado como dependencia local siguiendo Arquitectura Limpia
+domain = {path = "../domain", develop = true}
+
+# Django Core
+Django = "^5.0"
+djangorestframework = "^3.14"
+djangorestframework-simplejwt = "^5.3"
+
+# Database
+psycopg2-binary = "^2.9"
+
+# CORS
+django-cors-headers = "^4.3"
+
+# Documentation
+drf-yasg = "^1.21"
+
+# PDF Generation
+reportlab = "^4.0"
+xhtml2pdf = "^0.2"
+
+# Environment
+django-environ = "^0.11"
+
+# AI/Chatbot
+openai = "^1.0"
+requests = "^2.31"
+google-generativeai = "^0.8"
+
+# Utils
+Pillow = "^10.0"
+python-dotenv = "^1.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0"
+pytest-django = "^4.5"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+python_files = ["tests.py", "test_*.py", "*_test.py"]
+addopts = "-v --tb=short"

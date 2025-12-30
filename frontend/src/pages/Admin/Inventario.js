@@ -27,15 +27,15 @@ import { getEmpresasApi } from '../../api/empresas';
 import { getProductosApi } from '../../api/productos';
 
 const columns = [
-  { id: 'empresa_detail', label: 'Empresa', minWidth: 150, format: (v) => v?.nombre || 'N/A' },
-  { id: 'producto_detail', label: 'Producto', minWidth: 150, format: (v) => v?.nombre || 'N/A' },
+  { id: 'empresa_nombre', label: 'Empresa', minWidth: 150, format: (v) => v || 'N/A' },
+  { id: 'producto_nombre', label: 'Producto', minWidth: 150, format: (v) => v || 'N/A' },
   { id: 'cantidad', label: 'Cantidad', minWidth: 100 },
   { id: 'ubicacion', label: 'Ubicación', minWidth: 150 },
 ];
 
 const validationSchema = Yup.object({
   empresa: Yup.string().required('La empresa es requerida'),
-  producto: Yup.number().required('El producto es requerido'),
+  producto: Yup.string().required('El producto es requerido'),
   cantidad: Yup.number().min(0, 'Cantidad inválida').required('La cantidad es requerida'),
 });
 
@@ -81,8 +81,8 @@ export function Inventario() {
   const handleSearch = (query) => {
     const filtered = inventario.filter(
       (i) =>
-        i.empresa_detail?.nombre?.toLowerCase().includes(query.toLowerCase()) ||
-        i.producto_detail?.nombre?.toLowerCase().includes(query.toLowerCase())
+        i.empresa_nombre?.toLowerCase().includes(query.toLowerCase()) ||
+        i.producto_nombre?.toLowerCase().includes(query.toLowerCase())
     );
     setFilteredInventario(filtered);
   };
@@ -171,7 +171,7 @@ export function Inventario() {
   };
 
   const empresaOptions = empresas.map((e) => ({ value: e.nit, label: e.nombre }));
-  const productoOptions = productos.map((p) => ({ value: p.id, label: `${p.codigo} - ${p.nombre}` }));
+  const productoOptions = productos.map((p) => ({ value: p.codigo, label: `${p.codigo} - ${p.nombre}` }));
 
   return (
     <Box>
@@ -320,12 +320,12 @@ export function Inventario() {
             <Box>
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" color="textSecondary">Empresa</Typography>
-                <Typography variant="body1">{viewDialog.item.empresa_detail?.nombre || 'N/A'}</Typography>
+                <Typography variant="body1">{viewDialog.item.empresa_nombre || 'N/A'}</Typography>
               </Box>
 
               <Box sx={{ mb: 2 }}>
                 <Typography variant="subtitle2" color="textSecondary">Producto</Typography>
-                <Typography variant="body1">{viewDialog.item.producto_detail?.nombre || 'N/A'}</Typography>
+                <Typography variant="body1">{viewDialog.item.producto_nombre || 'N/A'}</Typography>
               </Box>
 
               <Divider sx={{ my: 2 }} />

@@ -1,0 +1,53 @@
+# Git
+.git
+.gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Docs
+README.md
+*.md
+docs/
+
+# Tests
+tests/
+test_*.py
+
+# Env files
+.env
+.env.local
+.env.*.local
+
+# DB local
+*.sqlite3
+db.sqlite3
+
+# Media/Static (se generan en el contenedor)
+staticfiles/
+media/

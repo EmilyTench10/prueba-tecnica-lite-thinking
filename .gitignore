@@ -1,9 +1,20 @@
 # Python
 __pycache__/
 *.py[cod]
-*.env
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+*.egg
+.eggs/
+dist/
 venv/
 .venv/
+env/
+
+# Environment files (keep .env.example)
+.env
+!.env.example
 
 # Django
 *.log
@@ -11,11 +22,28 @@ db.sqlite3
 staticfiles/
 media/
 
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
 # Node
 node_modules/
 build/
 .env.local
+.eslintcache
 
 # IDE
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/

@@ -1,0 +1,109 @@
+# =============================================================================
+# Docker Compose - Sistema de Inventario Lite Thinking
+# Arquitectura: PostgreSQL + Django (Backend) + React (Frontend)
+# =============================================================================
+
+services:
+  # ===========================================================================
+  # Base de datos PostgreSQL
+  # ===========================================================================
+  db:
+    image: postgres:15-alpine
+    container_name: litethinking_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME:-litethinking_db}
+      POSTGRES_USER: ${DB_USER:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres123}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - litethinking-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ===========================================================================
+  # Backend Django - API REST
+  # Arquitectura Limpia: Consume el paquete de dominio (domain)
+  # ===========================================================================
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: litethinking_backend
+    restart: unless-stopped
+    environment:
+      # Django
+      - DEBUG=${DEBUG:-False}
+      - SECRET_KEY=${SECRET_KEY:-django-insecure-change-this-in-production}
+      - ALLOWED_HOSTS=localhost,127.0.0.1,backend
+
+      # Base de datos
+      - DB_NAME=${DB_NAME:-litethinking_db}
+      - DB_USER=${DB_USER:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-postgres123}
+      - DB_HOST=db
+      - DB_PORT=5432
+
+      # Email SMTP (para envio de PDF por correo)
+      - EMAIL_HOST=${EMAIL_HOST:-smtp.gmail.com}
+      - EMAIL_PORT=${EMAIL_PORT:-587}
+      - EMAIL_HOST_USER=${EMAIL_HOST_USER}
+      - EMAIL_HOST_PASSWORD=${EMAIL_HOST_PASSWORD}
+      - EMAIL_USE_TLS=True
+
+      # CORS
+      - CORS_ALLOWED_ORIGINS=http://localhost:3000,http://localhost,http://localhost:80
+
+      # Chatbot IA
+      - CHATBOT_WEBHOOK_URL=${CHATBOT_WEBHOOK_URL:-http://host.docker.internal:5678/webhook/emily-tech-chatbot}
+    ports:
+      - "8000:8000"
+    volumes:
+      - backend_static:/app/staticfiles
+      - backend_media:/app/media
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - litethinking-network
+
+  # ===========================================================================
+  # Frontend React - Interfaz de Usuario
+  # Servido con Nginx para produccion
+  # ===========================================================================
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      args:
+        - REACT_APP_API_URL=/api/
+    container_name: litethinking_frontend
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - litethinking-network
+
+# =============================================================================
+# Redes
+# =============================================================================
+networks:
+  litethinking-network:
+    driver: bridge
+
+# =============================================================================
+# Volumenes persistentes
+# =============================================================================
+volumes:
+  postgres_data:
+    name: litethinking_postgres_data
+  backend_static:
+    name: litethinking_static
+  backend_media:
+    name: litethinking_media

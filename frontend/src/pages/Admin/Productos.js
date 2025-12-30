@@ -29,10 +29,13 @@ const columns = [
   { id: 'nombre', label: 'Nombre', minWidth: 200 },
   { id: 'empresa_nombre', label: 'Empresa', minWidth: 150 },
   {
-    id: 'precio_cop',
+    id: 'precios',
     label: 'Precio COP',
     minWidth: 120,
-    format: (value) => value ? `$ ${value.toLocaleString()}` : 'N/A',
+    format: (precios) => {
+      const precioCop = precios?.find(p => p.moneda === 'COP');
+      return precioCop ? `$ ${precioCop.precio.toLocaleString()}` : 'N/A';
+    },
   },
 ];
 

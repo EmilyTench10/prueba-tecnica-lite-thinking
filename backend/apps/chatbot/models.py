@@ -50,3 +50,5 @@ class MensajeChat(models.Model):
 
     def __str__(self):
         return f"{self.tipo}: {self.mensaje[:50]}..."
+
+

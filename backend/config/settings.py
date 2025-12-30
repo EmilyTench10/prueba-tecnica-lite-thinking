@@ -30,7 +30,9 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'corsheaders',
     'drf_yasg',
-    # Local apps
+    # Local apps - Capa de aplicación e infraestructura
+    # Los modelos de dominio están en el paquete domain (externo)
+    # pero usan app_labels de estas apps para compatibilidad
     'apps.users',
     'apps.empresas',
     'apps.productos',
@@ -101,7 +103,7 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
-# Custom User Model
+# Custom User Model - Modelo definido en domain pero con app_label='users'
 AUTH_USER_MODEL = 'users.User'
 
 # Internationalization

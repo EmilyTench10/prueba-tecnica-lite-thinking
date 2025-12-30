@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build (se genera en el contenedor)
+build/
+
+# Git
+.git
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Docker
+Dockerfile*
+.dockerignore
+
+# Docs
+README.md
+*.md
+
+# Tests
+coverage/
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Cache
+.cache/
+.npm/

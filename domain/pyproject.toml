@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "domain"
+version = "1.0.0"
+description = "Capa de dominio - Modelos Django y reglas de negocio (Arquitectura Limpia)"
+authors = ["Lite Thinking <dev@litethinking.com>"]
+readme = "README.md"
+packages = [{include = "domain"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+Django = "^5.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
