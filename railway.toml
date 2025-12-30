@@ -11,8 +11,8 @@ dockerfilePath = "backend/Dockerfile"
 # Puerto de la aplicación
 port = 8000
 
-# Comando de inicio - usar sh -c para expansion de variables
-startCommand = "sh -c 'echo PORT=$PORT && echo DB_HOST=$DB_HOST && python manage.py collectstatic --noinput && python manage.py migrate --verbosity 2 && python manage.py runserver 0.0.0.0:$PORT'"
+# Comando de inicio - con creación de superusuario
+startCommand = "sh -c 'python manage.py collectstatic --noinput && python manage.py migrate && python create_superuser.py && python manage.py runserver 0.0.0.0:$PORT'"
 
 # Deshabilitado temporalmente para debug
 # healthcheckPath = "/swagger/"
