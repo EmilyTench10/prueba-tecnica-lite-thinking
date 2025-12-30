@@ -1,0 +1,21 @@
+# =============================================================================
+# Railway Configuration
+# Sistema de Inventario Lite Thinking
+# =============================================================================
+
+[build]
+# Usar Dockerfile desde la raíz del proyecto
+dockerfilePath = "backend/Dockerfile"
+
+[deploy]
+# Puerto de la aplicación
+port = 8000
+
+# Comando de inicio
+startCommand = "python manage.py collectstatic --noinput && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+
+# Health check
+healthcheckPath = "/swagger/"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 3
